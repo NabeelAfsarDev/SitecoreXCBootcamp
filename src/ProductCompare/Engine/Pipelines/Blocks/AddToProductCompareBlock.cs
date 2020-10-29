@@ -70,5 +70,5 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Blocks
             };
         }
     }
-    }
 }
+
