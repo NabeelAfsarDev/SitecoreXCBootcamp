@@ -20,6 +20,24 @@ namespace Plugin.Bootcamp.Exercises.Catalog.WarrantyInformation.Pipelines.Blocks
 
             /* STUDENT: Complete the Run method as specified in the requirements */
 
+            if (string.IsNullOrEmpty(arg?.Name) || !arg.Name.Equals("WarrentyNotes", StringComparison.OrdinalIgnoreCase))
+            {
+                return Task.FromResult(arg);
+            }
+            var actionPolicy = arg.GetPolicy<ActionsPolicy>();
+
+            actionPolicy.Actions.Add(
+                    new EntityActionView
+                    {
+                        Name = "WarrentyNotes.Edit",
+                        DisplayName = "Edit Sellable Item Warrent Notes",
+                        Description = "Edits the Sellable item warrenty notes",
+                        IsEnabled = true,
+                        EntityView = arg.Name,
+                        Icon = "edit"
+                    }
+                );
+
             return Task.FromResult(arg);
         }
     }
