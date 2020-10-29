@@ -12,6 +12,7 @@
     "AllowedOrigins": [
       "https://localhost:4200",
       "http://localhost:4200",
+      "https://vwr.plumber-sc.com",
       "http://localhost:7976",
       "http://sxa.storefront.com",
       "https://bizfx.sc9.com"

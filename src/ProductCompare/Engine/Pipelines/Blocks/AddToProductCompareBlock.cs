@@ -33,6 +33,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Blocks
              * the sellable item exists already and return the collection.
              * Add the list entities using the Add List Entities Pipeline.
              * Return the collection. */
+            return null;
         }
     }
 }

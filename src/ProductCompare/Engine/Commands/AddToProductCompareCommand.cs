@@ -23,6 +23,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
             {
                 /* Student: Use the Get Product Compare Command to retrieve the Product Comparison and add
                  * the new Product for the comparison return the result of your Add to Product Compare Pipeline */
+                return null;
              }
         }
     }

@@ -22,6 +22,8 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Blocks
         {
             /* Student: Require a condition that the arg is not null.
              * Return a Product Comparison of 10 items. */
+            return null;
+
         }
 
         protected virtual async Task<IEnumerable<SellableItem>> GetListItems(string listName, int take, CommercePipelineExecutionContext context)

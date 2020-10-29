@@ -22,6 +22,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
             using (CommandActivity.Start(commerceContext, this))
             {
                 /* Student: Retrieve the current Product Comparison and then Remove the Sellable Item */
+                return null;
             }
         }
     }

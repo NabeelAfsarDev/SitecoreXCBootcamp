@@ -1,7 +1,7 @@
 ﻿{
   "AppSettings": {
     "EnvironmentName": "HabitatAuthoring",
-    "SitecoreIdentityServerUrl": "https://xp0-identityserver.dev.local",
+    "SitecoreIdentityServerUrl": "https://bootcamp-identityserver.local.test",
     "AntiForgeryEnabled": false
   },
   "Logging": {

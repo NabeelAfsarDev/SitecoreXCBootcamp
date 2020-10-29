@@ -21,7 +21,8 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
         public virtual async Task<ProductComparison> Process(CommerceContext context, string cartId)
         {
             /* Student: Require the Context is not null. Return null if the cartId is null, otherwise return the
-             * Product Comparison.  Log if the Product Comparison is null. */ 
+             * Product Comparison.  Log if the Product Comparison is null. */
+            return null;
         }
     }
 }

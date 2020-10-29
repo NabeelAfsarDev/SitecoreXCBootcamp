@@ -21,6 +21,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Controllers
              * Return a BadRequestObjectResult for value if it does not contain any of the properties expected.
              * Validate these properties are not empty, otherwise return a BadRequestObjectResult for value
              * Return the result of the AddToProductCompareCommand */
+            return null;
         }
 
 
@@ -32,6 +33,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Controllers
              * Return a BadRequestObjectResult for value if it does not contain any of the properties expected.
              * Validate these properties are not empty, otherwise return a BadRequestObjectResult for value
              * Return the result of the RemoveFromProductCompareCommand */
+            return null;         
         }
     }
 }

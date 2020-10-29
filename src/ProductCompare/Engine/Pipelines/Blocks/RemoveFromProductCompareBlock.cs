@@ -30,6 +30,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Blocks
              * the sellable item does not exist and return the collection.
              * Remove the sellable item from the list.
              * Return the collection */
+            return null;
         }
     }
 }
