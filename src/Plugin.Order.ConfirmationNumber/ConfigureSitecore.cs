@@ -23,7 +23,7 @@ namespace Plugin.Bootcamp.Exercises.Order.ConfirmationNumber
                 .ConfigurePipeline<IOrderPlacedPipeline>(
                        configure =>
                         {
-                            configure.Replace<OrderPlacedAssignCustomConfirmationIdBlock, OrderPlacedAssignCustomConfirmationIdBlock>()
+                            configure.Replace<OrderPlacedAssignConfirmationIdBlock, OrderPlacedAssignCustomConfirmationIdBlock>();
                         })
                 );
             services.RegisterAllCommands(assembly);
