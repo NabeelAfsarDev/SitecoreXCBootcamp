@@ -33,7 +33,42 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Blocks
              * the sellable item exists already and return the collection.
              * Add the list entities using the Add List Entities Pipeline.
              * Return the collection. */
-            return null;
+            Contract.Requires(arg != null);
+            Contract.Requires(context != null);
+
+            Condition.Requires(arg).IsNotNull($"{Name}: The arg can not be null");
+            Condition.Requires(arg.ProductId).IsNotNull($"{Name}: The Product Id can not be null");
+            Condition.Requires(arg.CompareCollection).IsNotNull($"{Name}: The Compare Collection can not be null");
+
+            var sellableItem = await _getSellableItemPipeline.Run(BuildProductArgument(arg), context).ConfigureAwait(false);
+
+            if (sellableItem == null)
+            {
+                context.Logger.LogWarning($"ProductCompare: Unable to find sellable item to add to collection: {arg.CatalogName}-{arg.ProductId}-{arg.VariantId}");
+                return arg.CompareCollection;
+            }
+
+            var list = arg.CompareCollection.Products.ToList();
+            if (list.Any(x => x.Id == sellableItem.Id))
+            {
+                context.Logger.LogDebug($"{Name}: SellableItem already exists in compare collection, no further action to take");
+                return arg.CompareCollection;
+            }
+
+            var addArg = new ListEntitiesArgument(new List<string> { sellableItem.Id }, arg.CompareCollection.Name);
+            await _addListEntitiesPipeline.Run(addArg, context).ConfigureAwait(false);
+            return arg.CompareCollection;
         }
+
+        private static ProductArgument BuildProductArgument(AddToProductCompareArgument arg)
+        {
+            return new ProductArgument
+            {
+                CatalogName = arg.CatalogName,
+                ProductId = arg.ProductId,
+                VariantId = arg.VariantId
+            };
+        }
+    }
     }
 }

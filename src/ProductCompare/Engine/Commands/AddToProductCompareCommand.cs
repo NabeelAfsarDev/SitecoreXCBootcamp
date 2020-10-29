@@ -15,6 +15,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
         public AddToProductCompareCommand(IAddToProductComparePipeline addToProductComparePipeline, IServiceProvider serviceProvider) : base(serviceProvider)
         {
             /* Student: Assign the Add to Product Compare Pipeline */
+            this._addToProductComparePipeline = addToProductComparePipeline;
         }
 
         public virtual async Task<ProductComparison> Process(CommerceContext commerceContext, string cartId, string catalogName, string productId, string variantId)
@@ -23,8 +24,12 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
             {
                 /* Student: Use the Get Product Compare Command to retrieve the Product Comparison and add
                  * the new Product for the comparison return the result of your Add to Product Compare Pipeline */
-                return null;
-             }
+                var getProductCompareCommand = Command<GetProductCompareCommand>();
+                var productComparison = await getProductCompareCommand.Process(commerceContext, cartId).ConfigureAwait(false);
+
+                var arg = new AddToProductCompareArgument(productComparison, catalogName, productId, variantId);
+                return await _addToProductComparePipeline.Run(arg, new CommercePipelineExecutionContextOptions(commerceContext)).ConfigureAwait(false);
+            }
         }
     }
 }

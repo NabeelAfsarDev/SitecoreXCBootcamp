@@ -15,6 +15,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
         public RemoveFromProductCompareCommand(IRemoveFromProductComparePipeline removeFromProductComparePipeline, IServiceProvider serviceProvider) : base(serviceProvider)
         {
             /* Student: Assign the Remove from Product Compare Pipeline */
+            _removeFromProductComparePipeline = removeFromProductComparePipeline;
         }
 
         public virtual async Task<ProductComparison> Process(CommerceContext commerceContext, string cartId, string sellableItemId)
@@ -22,7 +23,11 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
             using (CommandActivity.Start(commerceContext, this))
             {
                 /* Student: Retrieve the current Product Comparison and then Remove the Sellable Item */
-                return null;
+                var getProductCompareCommand = Command<GetProductCompareCommand>();
+                var productComparison = await getProductCompareCommand.Process(commerceContext, cartId).ConfigureAwait(false);
+
+                var arg = new RemoveFromProductCompareArgument(productComparison, sellableItemId);
+                return await _removeFromProductComparePipeline.Run(arg, new CommercePipelineExecutionContextOptions(commerceContext)).ConfigureAwait(false);
             }
         }
     }

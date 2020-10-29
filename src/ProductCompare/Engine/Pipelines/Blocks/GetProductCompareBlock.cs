@@ -22,7 +22,15 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Blocks
         {
             /* Student: Require a condition that the arg is not null.
              * Return a Product Comparison of 10 items. */
-            return null;
+            Condition.Requires(arg).IsNotNull($"{Name}: The compare collection id can not be null");
+
+            var productComparison = new ProductComparison
+            {
+                Name = arg,
+                Products = await GetListItems(arg, 10, context).ConfigureAwait(false)
+            };
+
+            return productComparison;
 
         }
 

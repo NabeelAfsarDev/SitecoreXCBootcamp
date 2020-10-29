@@ -10,6 +10,7 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Arguments
         protected ProductCompareArgument(ProductComparison compareCollection)
         {
             /* Student: Assign the CompareCollection */
+            CompareCollection = compareCollection;
         }
     }
 }

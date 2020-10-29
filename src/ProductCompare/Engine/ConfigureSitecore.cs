@@ -21,6 +21,20 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare
 
             /* Configure the Service Api Block
              * Add the GetProductCompare, AddToProductCompare, and RemoveFromProductCompare Pipelines */
+            services.Sitecore().Pipelines(config => config
+               .AddPipeline<IGetProductComparePipeline, GetProductComparePipeline>(configure =>
+               {
+                   configure.Add<GetProductCompareBlock>();
+               })
+              .AddPipeline<IAddToProductComparePipeline, AddToProductComparePipeline>(configure =>
+              {
+                  configure.Add<AddToProductCompareBlock>();
+              })
+              .AddPipeline<IRemoveFromProductComparePipeline, RemoveFromProductComparePipeline>(configure =>
+              {
+                  configure.Add<RemoveFromProductCompareBlock>();
+              })
+             );
         }
     }
 }

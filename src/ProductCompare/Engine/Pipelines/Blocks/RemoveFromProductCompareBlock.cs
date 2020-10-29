@@ -30,7 +30,27 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Blocks
              * the sellable item does not exist and return the collection.
              * Remove the sellable item from the list.
              * Return the collection */
-            return null;
+            Contract.Requires(arg != null);
+            Contract.Requires(context != null);
+
+            Condition.Requires(arg).IsNotNull($"{Name}: The arg can not be null");
+            Condition.Requires(arg.SellableItemId).IsNotNull($"{Name}: The Product Id can not be null");
+            Condition.Requires(arg.CompareCollection).IsNotNull($"{Name}: The Compare Collection can not be null");
+
+            var list = arg.CompareCollection.Products.ToList();
+            if (list.All(x => x.Id != arg.SellableItemId))
+            {
+                context.Logger.LogDebug($"{Name}: SellableItem dosen't exist in compare collection, no further action to take");
+                return arg.CompareCollection;
+            }
+
+            await _removeListEntitiesPipeline.Run(new ListEntitiesArgument(new[]
+            {
+                arg.SellableItemId
+            }, arg.CompareCollection.Name), context.CommerceContext.PipelineContext).ConfigureAwait(false);
+
+
+            return arg.CompareCollection;
         }
     }
 }

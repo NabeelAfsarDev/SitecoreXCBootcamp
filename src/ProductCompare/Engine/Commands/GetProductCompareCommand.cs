@@ -16,13 +16,32 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Commands
         public GetProductCompareCommand(IGetProductComparePipeline getProductComparePipeline, IServiceProvider serviceProvider) : base(serviceProvider)
         {
             /* Student: Assign the Get Product Compare Pipeline */
+            _getProductComparePipeline = getProductComparePipeline;
         }
 
         public virtual async Task<ProductComparison> Process(CommerceContext context, string cartId)
         {
             /* Student: Require the Context is not null. Return null if the cartId is null, otherwise return the
              * Product Comparison.  Log if the Product Comparison is null. */
-            return null;
+            Contract.Requires(context != null);
+
+            if (string.IsNullOrEmpty(cartId))
+            {
+                return null;
+            }
+
+            var entityPrefix = CommerceEntity.IdPrefix<ProductComparison>();
+            var entityId = cartId.StartsWith(entityPrefix, StringComparison.OrdinalIgnoreCase) ? cartId : $"{entityPrefix}{cartId}";
+
+            var options = new CommercePipelineExecutionContextOptions(context);
+
+            var productComparison = await _getProductComparePipeline.Run(entityId, options).ConfigureAwait(false);
+            if (productComparison == null)
+            {
+                context.Logger.LogDebug($"Entity {entityId} was not found");
+            }
+
+            return productComparison;
         }
     }
 }

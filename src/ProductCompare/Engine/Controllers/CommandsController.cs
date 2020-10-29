@@ -21,7 +21,31 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Controllers
              * Return a BadRequestObjectResult for value if it does not contain any of the properties expected.
              * Validate these properties are not empty, otherwise return a BadRequestObjectResult for value
              * Return the result of the AddToProductCompareCommand */
-            return null;
+            if (!ModelState.IsValid || value == null)
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
+
+            if (!value.ContainsKey("cartId") || !value.ContainsKey("productId") ||
+                !value.ContainsKey("catalogName") || !value.ContainsKey("variantId"))
+            {
+                return new BadRequestObjectResult(value);
+            }
+
+            var cartId = value["cartId"].ToString();
+            var catalogName = value["catalogName"].ToString();
+            var productId = value["productId"].ToString();
+            var variantId = value["variantId"].ToString();
+
+            if (string.IsNullOrWhiteSpace(cartId) || string.IsNullOrWhiteSpace(productId) || string.IsNullOrWhiteSpace(catalogName))
+            {
+                return new BadRequestObjectResult(value);
+            }
+
+            var command = Command<AddToProductCompareCommand>();
+            await command.Process(CurrentContext, cartId, catalogName, productId, variantId).ConfigureAwait(false);
+
+            return new ObjectResult(command);
         }
 
 
@@ -33,7 +57,28 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Controllers
              * Return a BadRequestObjectResult for value if it does not contain any of the properties expected.
              * Validate these properties are not empty, otherwise return a BadRequestObjectResult for value
              * Return the result of the RemoveFromProductCompareCommand */
-            return null;         
+            if (!ModelState.IsValid || value == null)
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
+
+            if (!value.ContainsKey("cartId") || !value.ContainsKey("sellableItemId"))
+            {
+                return new BadRequestObjectResult(value);
+            }
+
+            var cartId = value["cadtId"].ToString();
+            var sellableItemId = value["sellableItemId"].ToString();
+
+            if (string.IsNullOrWhiteSpace(cartId) || string.IsNullOrWhiteSpace(sellableItemId))
+            {
+                return new BadRequestObjectResult(value);
+            }
+
+            var command = Command<RemoveFromProductCompareCommand>();
+            await command.Process(CurrentContext, cartId, sellableItemId).ConfigureAwait(false);
+
+            return new ObjectResult(command);
         }
     }
 }

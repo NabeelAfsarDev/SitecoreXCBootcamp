@@ -23,7 +23,12 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Controllers
             /* Student: Return a NotFound if the ModelState is not valid or id is null.
              * Return a BadRequestObjectResult for value if it does not contain any of the properties expected.
              * Return the result of the GetProductCompareCommand otherwise return NotFound*/
-            return null;
+            if (!ModelState.IsValid || string.IsNullOrEmpty(id))
+                return NotFound();
+
+            var compareComponent = await Command<GetProductCompareCommand>().Process(CurrentContext, id).ConfigureAwait(false);
+
+            return compareComponent != null ? new ObjectResult(compareComponent) : (IActionResult)NotFound();
         }
     }
 }

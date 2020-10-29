@@ -11,6 +11,9 @@ namespace Plugin.Bootcamp.Exercises.ProductCompare.Pipelines.Arguments
         public AddToProductCompareArgument(ProductComparison compareCollection, string catalogName, string productId, string variantId) : base(compareCollection)
         {
             /* Student: Assign the properties for the sellable item being added to the comparison. */
+            CatalogName = catalogName;
+            ProductId = productId;
+            VariantId = variantId;
         }
     }
 }
