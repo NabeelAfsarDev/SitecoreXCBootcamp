@@ -23,17 +23,17 @@ namespace Plugin.Bootcamp.Exercises.Order.Export.Pipelines.Blocks
         {
             Contract.Requires(entityView != null);
             Contract.Requires(context != null);
-            /* STUDENT: Uncomment from here down to line 79
+            /* STUDENT: Uncomment from here down to line 79 */
             var request = this._viewCommander.CurrentEntityViewArgument(context.CommerceContext);
             if (request.ViewName != context.GetPolicy<KnownOrderViewsPolicy>().Summary
                  && request.ViewName != context.GetPolicy<KnownOrderViewsPolicy>().Master)
             {
-                // Do nothing if this request is for a different view
+                 //Do nothing if this request is for a different view
                 return Task.FromResult(entityView);
             }
             if (request.Entity == null)
             {
-                // Do nothing if there is no entity loaded
+                 //Do nothing if there is no entity loaded
                 return Task.FromResult(entityView);
             }
             // Only do something if the Entity is an order
@@ -42,7 +42,7 @@ namespace Plugin.Bootcamp.Exercises.Order.Export.Pipelines.Blocks
                 return Task.FromResult(entityView);
             }
 
-            //   EntityView entityViewToProcess;
+            //EntityView entityViewToProcess;
             var order = (XC.Order)request.Entity;
             var component = order.GetComponent<ExportedOrderComponent>();
             if (!component.DateExported.HasValue)
@@ -61,13 +61,13 @@ namespace Plugin.Bootcamp.Exercises.Order.Export.Pipelines.Blocks
 
             //Add properties and values to the view
             view.Properties.Add(
-                      new ViewProperty
-                      {
-                          Name = "Exported Location",
-                          RawValue = component.ExportFilename,
-                          IsReadOnly = true,
-                          IsRequired = false
-                      });
+                new ViewProperty
+                {
+                Name = "Exported Location",
+                RawValue = component.ExportFilename,
+                IsReadOnly = true,
+                IsRequired = false
+                });
             view.Properties.Add(
                 new ViewProperty
                 {
@@ -76,7 +76,7 @@ namespace Plugin.Bootcamp.Exercises.Order.Export.Pipelines.Blocks
                     IsReadOnly = true,
                     IsRequired = false
                 });
-                */
+                
             return Task.FromResult(entityView);
         }
     }

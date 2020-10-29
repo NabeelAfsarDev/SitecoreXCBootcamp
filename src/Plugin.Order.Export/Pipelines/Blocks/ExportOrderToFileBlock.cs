@@ -31,7 +31,27 @@ namespace Plugin.Bootcamp.Exercises.Order.Export.Pipelines.Blocks
              * 
              * Make sure you strip out any slashes from the filename.
              */
-            
+            var exportComponent = order.GetComponent<ExportedOrderComponent>();
+
+            if (exportComponent.DateExported.HasValue)
+            {
+                return order;
+            }
+
+            var policy = context.GetPolicy<OrderExportPolicy>();
+            var orderAsString = JsonConvert.SerializeObject(order);
+            string filename = policy.ExportToFileLocation + order.OrderConfirmationId.Replace("/", "-") + ".json";
+
+            using (StreamWriter sw = new StreamWriter(filename))
+            {
+                await sw.WriteAsync(orderAsString).ConfigureAwait(false);
+            }
+
+            exportComponent.DateExported = DateTime.Now;
+            if (filename != null) exportComponent.ExportFilename = filename;
+
+            await _persistEntityPipeline.Run(new PersistEntityArgument(order), context).ConfigureAwait(false);
+
             return order;
         }
     }
