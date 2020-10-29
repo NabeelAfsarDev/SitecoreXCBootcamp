@@ -23,12 +23,28 @@ namespace Plugin.Bootcamp.Exercises.VatTax
 
             services.Sitecore().Pipelines(config => config
                 /* STUDENT: Add code here to configure the necessary pipelines to show your navigation, present your
-                 * dashboard, present your add form, and handle your actions. */
-
-               .ConfigurePipeline<ICalculateCartLinesPipeline>(d =>
+                * dashboard, present your add form, and handle your actions. */
+                .ConfigurePipeline<IBizFxNavigationPipeline>(d =>
                 {
-                    d.Replace<Sitecore.Commerce.Plugin.Tax.CalculateCartLinesTaxBlock, CalculateCartLinesTaxBlockCustom>();
-                }));
+                    d.Add<GetVatTaxNavigationViewBlock>();
+                })
+                .ConfigurePipeline<IGetEntityViewPipeline>(d =>
+                {
+                    d.Add<GetVatTaxDashboardViewBlock>().Before<IFormatEntityViewPipeline>();
+                })
+                .ConfigurePipeline<IFormatEntityViewPipeline>(d =>
+                {
+                    d.Add<PopulateVatTaxDashboardActionsBlock>().Before<PopulateEntityViewActionsBlock>();
+                })
+                .ConfigurePipeline<IDoActionPipeline>(d =>
+                {
+                    d.Add<DoActionAddVatTaxBlock>().After<ValidateEntityVersionBlock>()
+                    .Add<DoActionRemoveVatTaxBlock>().After<ValidateEntityVersionBlock>();
+                })
+            .ConfigurePipeline<ICalculateCartLinesPipeline>(d =>
+            {
+                d.Replace<Sitecore.Commerce.Plugin.Tax.CalculateCartLinesTaxBlock, CalculateCartLinesTaxBlockCustom>();
+            }));
 
             services.RegisterAllCommands(assembly);
         }

@@ -16,8 +16,35 @@ namespace Plugin.Bootcamp.Exercises.VatTax.EntityViews
             Contract.Requires(context != null);
 
             Condition.Requires(entityView).IsNotNull($"{this.Name}: The argument cannot be null");
-            
+
             /* STUDENT: Add the necessary code to add the add and remove actions to the table on the Vat Tax dashboard */
+            if (entityView.Name != "VatTaxDashboard")
+            {
+                return Task.FromResult(entityView);
+            }
+
+            var tableViewActionPolicy = entityView.GetPolicy<ActionsPolicy>();
+            tableViewActionPolicy.Actions.Add(new EntityActionView
+            {
+                Name = "VatTax - AddVatTax",
+                DisplayName = "Adds a new Vat Tax Entry",
+                Description = "Adds a new Vat Tax Entry",
+                IsEnabled = true,
+                RequiresConfirmation = false,
+                EntityView = entityView.Name,
+                Icon = "Add"
+            });
+
+            tableViewActionPolicy.Actions.Add(new EntityActionView
+            {
+                Name = "VatTax - RemoveVatTax",
+                DisplayName = "Removes a new Vat Tax Entry",
+                Description = "Removes a new Vat Tax Entry",
+                IsEnabled = true,
+                RequiresConfirmation = true,
+                EntityView = string.Empty,
+                Icon = "delete"
+            });
 
 
             return Task.FromResult(entityView);
