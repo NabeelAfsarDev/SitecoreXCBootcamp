@@ -398,6 +398,10 @@
       },
       {
         "$type": "Sitecore.Commerce.Core.IgnorePublishedPolicy, Sitecore.Commerce.Core"
+      },
+      {
+        "$type": "Sitecore.Commerce.Core.PolicySetPolicy, Sitecore.Commerce.Core",
+        "PolicySetId":  "Entity-PolicySet-OrderExportPolicySet"
       }
     ]
   }
