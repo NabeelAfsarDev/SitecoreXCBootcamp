@@ -1,5 +1,5 @@
 {
-  "$type": "Sitecore.Commerce.Core.PolicySet, Sitecore.Commerce.Core",
+  "$type": "Sitecore.Commerce.Core.PolicySetPolicy, Sitecore.Commerce.Core",
   "Id": "Entity-PolicySet-WeatherServiceClientPolicySet",
   "Version": 1,
   "IsPersisted": false,
