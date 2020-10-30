@@ -240,7 +240,7 @@
         "ListsToWatch": [
           "ReleasedOrders"
         ],
-        "FullyQualifiedName": "Sitecore.Commerce.Plugin.Orders.ReleasedOrdersMinion, Sitecore.Commerce.Plugin.Orders",
+        "FullyQualifiedName":"Plugin.Bootcamp.Exercises.Order.Export.Minions.ExportOrdersMinion, Plugin.Bootcamp.Exercises.Order.Export", //"Sitecore.Commerce.Plugin.Orders.ReleasedOrdersMinion, Sitecore.Commerce.Plugin.Orders",
         "ItemsPerBatch": 10,
         "SleepBetweenBatches": 500,
         "Entities": {
