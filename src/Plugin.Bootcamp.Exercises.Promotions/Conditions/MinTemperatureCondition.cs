@@ -12,7 +12,7 @@ namespace Plugin.Bootcamp.Exercises.Promotions
         /* STUDENT: Add IRuleValue properties for the city, country, and
          * minimum temperature.
          */
-        public IRuleValue<Decimal> MinimaumTeprature { get; set; }
+        public IRuleValue<Decimal> MinimumTemperature { get; set; }
         public IRuleValue<string> City { get; set; }
         public IRuleValue<string> Country { get; set; }
 
@@ -23,7 +23,7 @@ namespace Plugin.Bootcamp.Exercises.Promotions
              * Compare it to the temperature stored in the Policy
              * Return the result of that comparison
              */
-            var minimumTemprature = MinimaumTeprature.Yield(context);
+            var minumumTemperature = MinimumTemperature.Yield(context);
             var city = City.Yield(context);
             var country = Country.Yield(context);
 
@@ -34,7 +34,7 @@ namespace Plugin.Bootcamp.Exercises.Promotions
 
             // STUDENT: Replace this line. It is only provided so the stub 
             // project will build cleanly
-            return currentTemprature > minimumTemprature;
+            return currentTemprature > minumumTemperature;
         }
 
         public decimal GetCurrentTemperature(string city, string country, string applicationId)
